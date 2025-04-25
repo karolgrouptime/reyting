@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('journals', function (Blueprint $table) {
             $table->id();
+            $table->string('slug');
+            $table->foreignId('group_id')->constrained('groups')->onDelete('cascade');
+            $table->foreignId('group_subject_id')->constrained('group_subjects')->onDelete('cascade');
             $table->timestamps();
         });
     }

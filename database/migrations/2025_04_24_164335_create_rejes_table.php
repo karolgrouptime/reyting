@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('rejes', function (Blueprint $table) {
             $table->id();
+            $table->date('date')->nullable();
+            $table->string('group')->nullable();
+            $table->unsignedTinyInteger('para')->nullable();
+            $table->string('teacher')->nullable();
+            $table->string('subject')->nullable();
+            $table->text('note')->nullable();
+            $table->string('room')->nullable();
             $table->timestamps();
         });
     }

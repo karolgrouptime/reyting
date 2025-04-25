@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('logs', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
+            $table->string('login');
+            $table->string('ip');
+            $table->string('kind');
+            $table->string('device');
+            $table->string('browser');
+            $table->string('platform');
             $table->timestamps();
         });
     }

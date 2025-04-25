@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('kathedras', function (Blueprint $table) {
             $table->id();
+            $table->string('slug');
+            $table->string('name');
+            $table->foreignId('faculty_id')->constrained('faculties')->onDelete('cascade');
             $table->timestamps();
         });
     }

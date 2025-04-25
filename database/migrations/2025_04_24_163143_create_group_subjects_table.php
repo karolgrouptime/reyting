@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('group_subjects', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('group_id')->constrained('groups')->onDelete('cascade');
+            $table->foreignId('subject_id')->constrained('subjects')->onDelete('cascade');
+            $table->foreignId('semester_id')->constrained('semesters')->onDelete('cascade');
+            $table->foreignId('teacher_id')->constrained('teachers')->onDelete('cascade');
+            $table->foreignId('teacher_two')->nullable()->constrained('teachers')->onDelete('cascade');
+            $table->bigInteger('number_of_hours');
             $table->timestamps();
         });
     }
