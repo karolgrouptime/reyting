@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('father_name')->nullable();
             $table->date('birth')->nullable();
             $table->date('recept_date');
-            $table->foreignId('degree_id')->nullable()->constrained('degrees')->onDelete('cascade');
+            $table->foreignId('degree_id')->nullable()->constrained('degres')->onDelete('cascade');
             $table->foreignId('group_id')->constrained('groups')->onDelete('cascade');
             $table->foreignId('nationality_id')->constrained('nationalities')->onDelete('cascade');
             $table->string('phone')->nullable();

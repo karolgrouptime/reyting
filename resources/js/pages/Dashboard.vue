@@ -13,6 +13,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 </script>
 
 <template>
+
     <Head title="Dashboard" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
