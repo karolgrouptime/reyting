@@ -4,6 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class MySeeder extends Seeder
 {
@@ -12,12 +16,36 @@ class MySeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('users')->insert([
+            [
+                'slug' => Str::random(10),
+                'name' => 'Rech',
+                'login' => 'admin',
+                'email' => 'karol.group.time@gmail.com',
+                'password' => Hash::make('12345678'),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'slug' => Str::random(10),
+                'name' => 'Aly',
+                'login' => 'teacher',
+                'email' => 'teacher@gmail.com',
+                'password' => Hash::make('12345678'),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+        ]);
         DB::table('degres')->insert([
+            ['name' => 'mugallym'],
+            ['name' => 'uly mugallym'],
+            ['name' => 'müdir'],
+            ['name' => 'zam-dekan'],
+            ['name' => 'dekan'],
+            ['name' => 'dosent'],
             ['name' => 'kandidat'],
             ['name' => 'professor'],
             ['name' => 'doktor'],
-            ['name' => 'dekan'],
-            ['name' => 'zam-dekan'],
             ['name' => 'prorektor'],
             ['name' => 'rektor'],
         ]);
@@ -93,7 +121,7 @@ class MySeeder extends Seeder
         ]);
         DB::table('kathedras')->insert([
             [
-                'slug' => Str::random(10), 
+                'slug' => Str::random(10),
                 'name' => 'Kompýuter tehnologiýalary',
                 'faculty_id' => 1,
             ],
@@ -117,22 +145,34 @@ class MySeeder extends Seeder
                 'value' => '5',
             ],
             [
-                'value' => 'N',
+                'value' => 'TK',
             ],
             [
                 'value' => 'LN',
             ],
             [
-                'value' => 'H',
+                'value' => 'HA',
             ],
             [
-                'value' => 'Iş/s',
+                'value' => 'IS',
             ],
             [
-                'value' => 'M/ç',
+                'value' => 'IT',
             ],
             [
-                'value' => 'Hasap',
+                'value' => 'MÇ',
+            ],
+            [
+                'value' => 'DÝ',
+            ],
+            [
+                'value' => 'SÇ',
+            ],
+            [
+                'value' => 'HP',
+            ],
+            [
+                'value' => 'BH',
             ],
             [
                 'value' => 'GM',
@@ -140,21 +180,21 @@ class MySeeder extends Seeder
         ]);
         DB::table('groups')->insert([
             [
-               
+
                 'slug' => Str::random(10),
                 'name' => 'ADU',
                 'number' => '18/1-1',
                 'kathedra_id' => 1,
             ],
             [
-              
+
                 'slug' => Str::random(10),
                 'name' => 'Maglumat howpsuzlyk',
                 'number' => '18/1-2',
                 'kathedra_id' => 1,
             ],
             [
-                
+
                 'slug' => Str::random(10),
                 'name' => 'Maliýa',
                 'number' => '17/1-2',
@@ -168,7 +208,48 @@ class MySeeder extends Seeder
             ['number' => 4],
             ['number' => 5],
         ]);
+        DB::table('semesters')->insert([
+            [
+                'number' => 1,
+                'course_id' => 1,
+            ],
+            [
+                'number' => 2,
+                'course_id' => 1,
+            ],
+            [
+                'number' => 3,
+                'course_id' => 2,
+            ],
+            [
+                'number' => 4,
+                'course_id' => 2,
+            ],
+            [
+                'number' => 5,
+                'course_id' => 3,
+            ],
+            [
+                'number' => 6,
+                'course_id' => 3,
+            ],
+            [
+                'number' => 7,
+                'course_id' => 4,
+            ],
+            [
+                'number' => 8,
+                'course_id' => 4,
+            ],
+            [
+                'number' => 9,
+                'course_id' => 5,
+            ],
+            [
+                'number' => 10,
+                'course_id' => 5,
+            ],
+        ]);
 
-        
     }
 }
