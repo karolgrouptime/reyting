@@ -26,11 +26,14 @@ use App\Http\Controllers\SubscriptionTypeController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\RankController;
 use App\Http\Controllers\DegreController;
+
 /* dashboard */
-Route::get('/bestGroups',[DashboardController::class, 'bestGroups']);
-Route::get('/worseGroups', [DashboardController::class,'bestGroups']);
+
+Route::get('/bestGroups', [DashboardController::class, 'bestGroups']);
+Route::get('/worseGroups', [DashboardController::class, 'bestGroups']);
 
 //Route::get('/', [DashboardController::class,'index'])->name('dashboard');
+
 //Route::get('/reyting', [DashboardController::class,'reyting'])->name('reyting');
 
 Route::post('/bests/api', [DashboardController::class, 'bestsApi'])->name('bests.Api');
@@ -40,81 +43,96 @@ Route::get('/', function () {
     return Inertia::render('Welcome');
 })->name('home');
 
-Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+//Route::get('dashboard', function () {
+//    return Inertia::render('Dashboard');
+//})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+
+    Route::get('dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
 
     Route::get('/admins', [UserController::class, 'admins'])->name('admins');
+    // USERS
+    Route::prefix('users')->name('users.')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('index');
+        Route::get('/create', [UserController::class, 'create'])->name('create');
+        Route::post('/store', [UserController::class, 'store'])->name('store');
+        Route::get('/delete/{user}', [UserController::class, 'delete'])->name('delete');
+        Route::get('/block/{user}', [UserController::class, 'block'])->name('block');
+        Route::get('/open/{user}', [UserController::class, 'open'])->name('open');
+        Route::get('/permissions/{user}', [UserController::class, 'permissions'])->name('permissions');
+        Route::get('/edit/{user}', [UserController::class, 'edit'])->name('edit');
+        Route::post('/update/{user}', [UserController::class, 'update'])->name('update');
+        Route::get('/profile/{user}', [UserController::class, 'profile'])->name('profile');
+        Route::post('/api', [UserController::class, 'getUsersApi'])->name('api');
+    });
 
-     /* users */
-    Route::get('/users', [UserController::class, 'index'])->name('users');
-    Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
-    Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
-    Route::get('/user/delete/{user_id}', [UserController::class, 'delete'])->name('user.delete');
-    Route::get('/user/block/{user_id}', [UserController::class, 'block'])->name('user.block');
-    Route::get('/user/open/{user_id}', [UserController::class, 'open'])->name('user.open');
-    Route::get('/user/permissions/{user_id}', [UserController::class, 'permissions'])->name('user.permissions');
-    Route::get('/user/edit/{user_id}', [UserController::class, 'edit'])->name('user.edit');
-    Route::post('/user/update/{user_id}', [UserController::class, 'update'])->name('user.update');
-    Route::get('/user/profile/{user_id}', [UserController::class, 'profile'])->name('user.profile');
-    Route::post('/userApi', [UserController::class, 'getUsersApi'])->name('user.api');
+    // ROLES
+    Route::prefix('roles')->name('roles.')->group(function () {
+        Route::get('/', [RoleController::class, 'index'])->name('index');
+        Route::get('/create', [RoleController::class, 'create'])->name('create');
+        Route::get('/{role}/edit', [RoleController::class, 'edit'])->name('edit');
+        Route::post('/update', [RoleController::class, 'update'])->name('update');
+        Route::post('/store', [RoleController::class, 'store'])->name('store');
+        Route::get('/{role}/delete', [RoleController::class, 'delete'])->name('delete');
+    });
 
-    /* role */
-    Route::get('/roles', [RoleController::class, 'index'])->name('roles');
-    Route::get('/role/create', [RoleController::class, 'create'])->name('role.create');
-    Route::get('/role/{role_id}/edit', [RoleController::class, 'edit'])->name('role.edit');
-    Route::post('/role/update', [RoleController::class, 'update'])->name('role.update');
-    Route::post('/role/store', [RoleController::class, 'store'])->name('role.store');
-    Route::get('/role/{role_id}/delete', [RoleController::class, 'delete'])->name('role.delete');
-    /* role */
+    // PERMISSIONS
+    Route::prefix('permissions')->name('permissions.')->group(function () {
+        Route::get('/', [PermissionController::class, 'permissions'])->name('index');
+        Route::get('/{perm}/edit', [PermissionController::class, 'edit'])->name('edit');
+        Route::post('/{perm}/update', [PermissionController::class, 'update'])->name('update');
+        Route::post('/store', [PermissionController::class, 'store'])->name('store');
+        Route::get('/delete', [PermissionController::class, 'delete'])->name('delete');
+    });
 
-    /* permissions */
-    Route::get('/permissions', [PermissionController::class, 'permissions'])->name('permissions');
-    Route::get('/permission/{perm_id}/edit', [PermissionController::class, 'edit'])->name('permission.edit');
-    Route::post('/permission/{perm_id}/update', [PermissionController::class, 'update'])->name('permission.update');
-    Route::post('/permission/store', [PermissionController::class, 'store'])->name('permission.store');
-    Route::get('/permission/delete', [PermissionController::class, 'delete'])->name('permission.delete');
-    /* permissions */
+    // TEACHERS
+    Route::prefix('teachers')->name('teachers.')->group(function () {
+        Route::get('/', [TeacherController::class, 'teachers'])->name('index');
+        Route::get('/create', [TeacherController::class, 'create'])->name('create');
+        Route::post('/store', [TeacherController::class, 'store'])->name('store');
+        Route::get('/{teacher}/edit', [TeacherController::class, 'edit'])->name('edit');
+        Route::get('/{teacher}/edit/dekan', [TeacherController::class, 'teacherEdit'])->name('teacherEdit');
+        Route::post('/{teacher}/update/dekan', [TeacherController::class, 'teacherUpdate'])->name('teacherUpdate');
+        Route::post('/{teacher}/update', [TeacherController::class, 'update'])->name('update');
+        Route::get('/{teacher}/delete', [TeacherController::class, 'delete'])->name('delete');
+        Route::get('/{teacher}/profile', [TeacherController::class, 'profile'])->name('profile');
+        Route::post('/api', [TeacherController::class, 'getTeachersApi'])->name('api');
+        Route::get('/groups', [TeacherController::class, 'teacherGroups'])->name('groups');
+        Route::post('/groupsApi', [TeacherController::class, 'teacherGroupsApi'])->name('groupsApi');
+        Route::get('/group/subjects/{group}', [TeacherController::class, 'groupSubjects'])->name('groupSubjects');
+        Route::post('/getSubjectsOfGroupApi', [TeacherController::class, 'getSubjectsOfGroupApi'])->name('groupSubjects.api');
+        Route::get('/groupSubject/{group?}/{subject?}/{semester?}/{rate_can?}', [TeacherController::class, 'groupSubject'])->name('groupSubject');
+    });
 
-    /* teachers */
-    Route::get('/teachers', [TeacherController::class, 'teachers'])->name('teachers');
-    Route::get('/teacher/create', [TeacherController::class, 'create'])->name('teacher.create');
-    Route::post('/teacher/store', [TeacherController::class, 'store'])->name('teacher.store');
-    Route::get('/teacher/{teacher_id}/edit', [TeacherController::class, 'edit'])->name('teacher.edit');
-    Route::get('/teacher/{teacher_id}/edit/dekan', [TeacherController::class, 'teacherEdit'])->name('teacher.teacherEdit');
-    Route::post('/teacher/{teacher_id}/update/dekan', [TeacherController::class, 'teacherUpdate'])->name('teacher.teacherUpdate');
-    Route::post('/teacher/{teacher_id}/update', [TeacherController::class, 'update'])->name('teacher.update');
-    Route::get('/teacher/{teacher_id}/delete', [TeacherController::class, 'delete'])->name('teacher.delete');
-    Route::get('/teacher/{teacher_id}/profile', [TeacherController::class, 'profile'])->name('teacher.profile');
-    Route::post('/teacherApi', [TeacherController::class, 'getTeachersApi'])->name('teacher.api');
-    /* teacher group journals */
-    Route::get('/teacher/groups', [TeacherController::class, 'teacherGroups'])->name('teacher.groups');
-    Route::post('/teacher/groupsApi', [TeacherController::class, 'teacherGroupsApi'])->name('teacher.groupsApi');
-    /* teacher group subjects */
-    Route::get('/teacher/group/subjects/{group_id}', [TeacherController::class, 'groupSubjects'])->name('teacher.groupSubjects');
-    Route::post('/teacher/getSubjectsOfGroupApi', [TeacherController::class, 'getSubjectsOfGroupApi'])->name('teacher.groupSubjects.api');
-    Route::get('/teacher/groupSubject/{group_id?}/{subject_id?}/{semester_id?}/{rate_can?}', [TeacherController::class, 'groupSubject'])->name('teacher.groupSubject');
-    /* students */
-    Route::get('/students', [StudentController::class, 'students'])->name('students');
-    Route::get('/student/create', [StudentController::class, 'create'])->name('student.create');
-    Route::post('/student/store', [StudentController::class, 'store'])->name('student.store');
-    Route::get('/student/{student_id}/edit', [StudentController::class, 'edit'])->name('student.edit');
-    Route::post('/student/{student_id}/update', [StudentController::class, 'update'])->name('student.update');
-    Route::get('/student/{student_id}/delete', [StudentController::class, 'delete'])->name('student.delete');
-    Route::get('/student/{student_id}/profile', [StudentController::class, 'profile'])->name('student.profile');
-    Route::post('/studentApi', [StudentController::class, 'getStudentsApi'])->name('student.api');
-    Route::get('/student/block/{student_id}', [StudentController::class, 'block'])->name('student.block');
-    Route::get('/student/open/{student_id}', [StudentController::class, 'open'])->name('student.open');
+    // STUDENTS
+    Route::prefix('students')->name('students.')->group(function () {
+        Route::get('/', [StudentController::class, 'students'])->name('index');
+        Route::get('/create', [StudentController::class, 'create'])->name('create');
+        Route::post('/store', [StudentController::class, 'store'])->name('store');
+        Route::get('/{student}/edit', [StudentController::class, 'edit'])->name('edit');
+        Route::post('/{student}/update', [StudentController::class, 'update'])->name('update');
+        Route::get('/{student}/delete', [StudentController::class, 'delete'])->name('delete');
+        Route::get('/{student}/profile', [StudentController::class, 'profile'])->name('profile');
+        Route::post('/api', [StudentController::class, 'getStudentsApi'])->name('api');
+        Route::get('/block/{student}', [StudentController::class, 'block'])->name('block');
+        Route::get('/open/{student}', [StudentController::class, 'open'])->name('open');
+    });
 
-    /* groups */
-    Route::post('/groupApi', [GroupController::class, 'getGroupsApi'])->name('group.api');
-    Route::post('/group/store', [GroupController::class, 'store'])->name('group.store');
-    Route::get('/group/delete/{group_id}', [GroupController::class, 'delete'])->name('group.delete');
-    Route::get('/group/edit/{group_id}', [GroupController::class, 'edit'])->name('group.edit');
-    Route::post('/group/update/{group_id}', [GroupController::class, 'update'])->name('group.update');
-    Route::get('/group/block/{group_id}', [GroupController::class, 'block'])->name('group.block');
-    Route::get('/group/open/{group_id}', [GroupController::class, 'open'])->name('group.open');
-    /* Other Routes are similar... */
+    // GROUPS
+    Route::prefix('groups')->name('groups.')->group(function () {
+        Route::post('/api', [GroupController::class, 'getGroupsApi'])->name('api');
+        Route::post('/store', [GroupController::class, 'store'])->name('store');
+        Route::get('/delete/{group}', [GroupController::class, 'delete'])->name('delete');
+        Route::get('/edit/{group}', [GroupController::class, 'edit'])->name('edit');
+        Route::post('/update/{group}', [GroupController::class, 'update'])->name('update');
+        Route::get('/block/{group}', [GroupController::class, 'block'])->name('block');
+        Route::get('/open/{group}', [GroupController::class, 'open'])->name('open');
+    });
+});
 
-require __DIR__.'/settings.php';
-require __DIR__.'/auth.php';
+
+require __DIR__ . '/settings.php';
+require __DIR__ . '/auth.php';

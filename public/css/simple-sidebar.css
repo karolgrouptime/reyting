@@ -1,0 +1,71 @@
+/*!
+ * Start Bootstrap - Simple Sidebar (https://startbootstrap.com/template-overviews/simple-sidebar)
+ * Copyright 2013-2019 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-simple-sidebar/blob/master/LICENSE)
+ */
+body {
+  overflow-x: hidden;
+}
+
+#sidebar-wrapper {
+  min-height: 100vh;
+  margin-left: -15rem;
+  -webkit-transition: margin .25s ease-out;
+  -moz-transition: margin .25s ease-out;
+  -o-transition: margin .25s ease-out;
+  transition: margin .25s ease-out;
+
+  background: #1b1e21; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #237A57 0%, #007355 100%); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #237A57 0%, #1f7a0d 100%); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color:whitesmoke;
+}
+
+#sidebar-wrapper .sidebar-heading {
+  background: #1b1e21; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #237A57 0%, #007355 100%); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #237A57 0%, #1f7a0d 100%);/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color:whitesmoke;
+  padding: 1rem 1.25rem 0.7rem 5rem;
+  font-size: 1.5rem;
+}
+
+#sidebar-wrapper .list-group {
+  width: 15rem;
+}
+
+#sidebar-wrapper .list-group a {
+
+  background: #1b1e21; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #237A57 0%, #007355 100%); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #237A57 0%, #1f7a0d 100%);/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color:whitesmoke;
+}
+
+#sidebar-wrapper .list-group a i {
+ color: #fbfbff;
+}
+
+#page-content-wrapper {
+  min-width: 100vw;
+  background: #eee;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: 0;
+}
+
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: 0rem;
+  }
+}
